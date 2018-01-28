@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Catamaran');
+
+body {
+  background-color: #173753;
+}
+
+.App {
+  font-family: "Catamaran";
+  text-align: center;
+  color: #56CBF9;
+}
+
