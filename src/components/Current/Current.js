@@ -44,7 +44,7 @@ class Current extends Component {
         currentMain : {},
         //currentTime : "",
         ready : false,
-        urlBase : 'http://api.openweathermap.org/data/2.5/forecast?zip=',
+        urlBase : 'https://api.openweathermap.org/data/2.5/forecast?zip=',
         urlAfter: ',us&units=imperial&APPID=b52ab967cdcf61785395d382806bc07c'
     }
 
