@@ -34,11 +34,13 @@ body {
 }
 
 .Country {
+  font-size: 40px;
   text-align: left;
 }
 
 .ShortDescription {
   height: 1em;
+  font-size: 40px;
   font-weight: 400;
   text-align: right;
 }
@@ -61,4 +63,10 @@ body {
   font-size: 24px;
   font-weight: 100;
   text-align: center;
+}
+
+@media (max-width: 650px) {
+  .Temp, .ShortDescription, .Country, .City {
+    font-size: 30px;
+  }
 }
