@@ -48,6 +48,12 @@ class Current extends Component {
         urlAfter: ',us&units=imperial&APPID=b52ab967cdcf61785395d382806bc07c'
     }
 
+    /* 
+        It's not best practice to have your API key in the URL -- I'm fully aware!
+        This is just for testing during development. There will be a RESTful NodeJS backend handling requests
+        to OpenWeatherAPI (with a new API key, of course!) coming soon and this API key will be deactivated.
+    */
+
 
     componentDidMount() {
         axios.get(this.state.urlBase + this.props.location + this.state.urlAfter)
