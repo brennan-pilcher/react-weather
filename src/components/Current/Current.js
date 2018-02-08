@@ -17,7 +17,7 @@ class Current extends Component {
 
 
     componentDidMount() {
-        fetch('/weather/zip/' + this.props.location)
+        fetch('https://react-weather-backend.herokuapp.com/weather/zip/' + this.props.location)
             .then(res => res.json())
             .then(response => {
                 console.log(response);
