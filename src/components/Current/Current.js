@@ -15,6 +15,12 @@ class Current extends Component {
         ready : false
     }
 
+    /* 
+        It's not best practice to have your API key in the URL -- I'm fully aware!
+        This is just for testing during development. There will be a RESTful NodeJS backend handling requests
+        to OpenWeatherAPI (with a new API key, of course!) coming soon and this API key will be deactivated.
+    */
+
 
     componentDidMount() {
         /*
