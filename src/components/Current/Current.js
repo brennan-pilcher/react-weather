@@ -15,25 +15,8 @@ class Current extends Component {
         ready : false
     }
 
-    /* 
-        It's not best practice to have your API key in the URL -- I'm fully aware!
-        This is just for testing during development. There will be a RESTful NodeJS backend handling requests
-        to OpenWeatherAPI (with a new API key, of course!) coming soon and this API key will be deactivated.
-    */
-
 
     componentDidMount() {
-        /*
-        axios.get(this.state.urlBase + this.props.location + this.state.urlAfter)
-            .then(response => {
-                this.setState({ currentWeather: response.data.list[0].weather });
-                this.setState({ currentMain: response.data.list[0].main });
-                this.setState({ currentTime: response.data.list[0].dt_txt });
-                this.setState({ city: response.data.city });
-                this.setState({ ready: true });
-                console.log(this.state);
-            });\
-            */
         fetch('/weather/zip/' + this.props.location)
             .then(res => res.json())
             .then(response => {
