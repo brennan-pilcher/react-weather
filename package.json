@@ -18,5 +18,6 @@
   "homepage": "https://brennan-pilcher.github.io/react-weather",
   "devDependencies": {
     "gh-pages": "^1.1.0"
-  }
+  },
+  "proxy": "http://react-weather-backend.herokuapp.com"
 }

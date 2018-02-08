@@ -6,50 +6,18 @@ class Current extends Component {
     state = {
         cityName: '',
         countryName: '',
-        sampleData : {
-            "dt": 1517108400,
-            "main": {
-                "temp": 283.9,
-                "temp_min": 283.344,
-                "temp_max": 283.9,
-                "pressure": 1035.84,
-                "sea_level": 1039.34,
-                "grnd_level": 1035.84,
-                "humidity": 70,
-                "temp_kf": 0.56
-            },
-            "weather": [
-                {
-                "id": 804,
-                "main": "Clouds",
-                "description": "overcast clouds",
-                "icon": "04n"
-                }
-            ],
-            "clouds": {
-                "all": 88
-            },
-            "wind": {
-                "speed": 5.4,
-                "deg": 215.503
-            },
-            "sys": {
-                "pod": "n"
-            },
-            "dt_txt": "2018-01-28 03:00:00"
-            },
-        city : {},
-
-        currentWeather : {},
-        currentMain : {},
-        //currentTime : "",
-        ready : false,
-        urlBase : 'https://api.openweathermap.org/data/2.5/forecast?zip=',
-        urlAfter: ',us&units=imperial&APPID=b52ab967cdcf61785395d382806bc07c'
+        weatherData: {
+            city : {},
+            currentWeather : {},
+            currentMain : {},
+            currentTime : ""
+        },
+        ready : false
     }
 
 
     componentDidMount() {
+        /*
         axios.get(this.state.urlBase + this.props.location + this.state.urlAfter)
             .then(response => {
                 this.setState({ currentWeather: response.data.list[0].weather });
@@ -58,6 +26,13 @@ class Current extends Component {
                 this.setState({ city: response.data.city });
                 this.setState({ ready: true });
                 console.log(this.state);
+            });\
+            */
+        fetch('/weather/zip/' + this.props.location)
+            .then(res => res.json())
+            .then(response => {
+                console.log(response);
+                this.setState({weatherData: response, ready: true});
             });
     }
 
@@ -119,8 +94,8 @@ class Current extends Component {
         }
 
         const today = {
-            "date" : new Date(this.state.currentTime + " UTC").toString(),
-            "day" : new Date(this.state.currentTime + " UTC").getDay()
+            "date" : new Date(this.state.weatherData.currentTime + " UTC").toString(),
+            "day" : new Date(this.state.weatherData.currentTime + " UTC").getDay()
         }
 
         if (this.state.ready) {
@@ -129,23 +104,23 @@ class Current extends Component {
                     <div className="Container">
                     <div className="Block">
                         <div className="Temp">
-                            {this.state.currentMain.temp} F
+                            {this.state.weatherData.currentMain.temp} F
                         </div>
                         <div className="ShortDescription">
-                            {this.state.currentWeather[0].main}
+                            {this.state.weatherData.currentWeather[0].main}
                         </div>
                     </div>
                     <div className="Block">
                         <div className="City">
-                            {this.state.city.name}
+                            {this.state.weatherData.city.name}
                         </div>
                         <div className="Country">
-                            {this.state.city.country}
+                            {this.state.weatherData.city.country}
                         </div>
                     </div>
                     </div>
                     <div className="LongDescription">
-                        {this.state.currentWeather[0].description}
+                        {this.state.weatherData.currentWeather[0].description}
                     </div>
                     <div className="Date">
                         {fullDayName(today.day)}
