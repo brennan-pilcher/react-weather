@@ -142,6 +142,9 @@ const fullMonthName = (monthNumber) => {
         case 11:
             return "December";
             break;
+        default:
+            return "Huh?";
+            break;
     }
 }
 
