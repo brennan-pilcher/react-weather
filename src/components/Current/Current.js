@@ -13,6 +13,7 @@ class Current extends Component {
             currentMain : {},
             currentTime : ""
         },
+        forecast: {},
         ready : false
     }
 
@@ -23,7 +24,35 @@ class Current extends Component {
             .then(res => res.json())
             .then(response => {
                 console.log(response);
-                this.setState({weatherData: response, ready: true});
+
+                let wD = this.state.weatherData;
+
+                wD.city = response.city;
+                wD.currentTime = response.list[0].dt_txt;
+                wD.currentMain = response.list[0].main;
+                wD.currentWeather = response.list[0].weather;
+
+                let days = {};
+
+                for (let elem of response.list) {
+                    let now = new Date(elem.dt_txt + " UTC");
+
+                    if (days[now.getDate()] == undefined) {
+                        days[now.getDate()] = {};
+                    }
+
+                    days[now.getDate()][now.getHours()] = elem;
+
+                    //console.log(now);
+                }
+
+                //console.log(days);
+                
+                //this.setState({weatherData: response, ready: true});
+                this.setState({
+                    weatherData: wD,
+                    ready: true
+                });
             });
     }
 
