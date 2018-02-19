@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css?family=Catamaran');
+
+body {
+  background-color: #173753;
+  text-align: center;
+  font-family: "Catamaran";
+  color: #56CBF9;
+}
+
+.Container {
+  font-size: 40px;
+  font-family: "Catamaran";
+  background-color: #173753;
+  display: inline-block;
+}
+
+.Block {
+  margin: 16px;
+  display: inline-block;
+}
+
+.Divider {
+  display: inline-block;
+  width: 4px;
+  height: 100px;
+  background-color: black;
+}
+
+.City {
+  height: 1.2em;
+  font-size: 60px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.Country {
+  font-size: 40px;
+  text-align: left;
+}
+
+.ShortDescription {
+  height: 1em;
+  font-size: 40px;
+  font-weight: 400;
+  text-align: right;
+}
+
+.LongDescription {
+  margin-top: 32px;
+  font-size: 36px;
+  font-weight: 100;
+  text-align: center;
+}
+
+.Temp {
+  height: 1.2em;
+  font-size: 60px;
+  font-weight: 600;
+  text-align: right;
+}
+
+.Date {
+  font-size: 24px;
+  font-weight: 100;
+  text-align: center;
+}
+
+@media (max-width: 650px) {
+  .Temp, .ShortDescription, .Country, .City {
+    font-size: 30px;
+  }
+}

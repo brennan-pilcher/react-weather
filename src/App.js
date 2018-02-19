@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Current from './components/Current/Current';
+import Weather from './components/Weather/Weather';
 import InputBox from './components/InputBox/InputBox';
 
 
@@ -23,7 +23,7 @@ class App extends Component {
 
   render() {
 
-    let currentWeather = <Current location={this.state.location} />;
+    let currentWeather = <Weather location={this.state.location} />;
 
     if (this.state.showWeather) {
       return (
