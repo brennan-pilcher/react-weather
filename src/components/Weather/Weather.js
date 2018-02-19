@@ -45,11 +45,7 @@ class Weather extends Component {
                     }
 
                     days[now.getDate()][now.getHours()] = elem;
-
-                    //console.log(now);
                 }
-
-                //console.log(days);
 
                 let fc = [];
 
@@ -59,7 +55,7 @@ class Weather extends Component {
                     let day = {};
 
                     for(let hour in days[date]) {
-                        //console.log(days[date][hour]);
+
                         if (day.date === undefined) {
                             let dateObj = new Date(days[date][hour].dt_txt + " UTC");
                             day["date"] = {
@@ -79,24 +75,11 @@ class Weather extends Component {
                             day["short_description"] = days[date][hour].weather[0].main;
                         }
                     }
-                    // console.log("DAY");
-                    // console.log(day);
 
                     fc.push(day);
 
                 }
 
-                
-                //console.log(fc);
-
-
-
-
-
-                
-
-                
-                //this.setState({weatherData: response, ready: true});
                 this.setState({
                     weatherData: wD,
                     forecast: fc,
@@ -106,9 +89,6 @@ class Weather extends Component {
     }
 
     render() { 
-
-        //console.log(this.state);
-
 
         const today = {
             "date" : new Date(this.state.weatherData.currentTime + " UTC").toString(),
@@ -128,8 +108,6 @@ class Weather extends Component {
                 />
             )
         });
-
-        console.log(this.state.forecast);
 
         if (this.state.ready) {
             return (
