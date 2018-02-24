@@ -56,6 +56,7 @@ class Weather extends Component {
 
                     for(let hour in days[date]) {
 
+                        // set the date object within the current day
                         if (day.date === undefined) {
                             let dateObj = new Date(days[date][hour].dt_txt + " UTC");
                             day["date"] = {
@@ -64,12 +65,15 @@ class Weather extends Component {
                                 month: dateObj.getMonth()
                             };
                         }
+                        // set the day's minimum temperature
                         if (day.temp_min === undefined || day.temp_min > days[date][hour].main.temp_min) {
                             day["temp_min"] = days[date][hour].main.temp_min;
                         }
+                        //set the day's maximum temperature
                         if (day.temp_max === undefined || day.temp_max < days[date][hour].main.temp_max) {
                             day["temp_max"] = days[date][hour].main.temp_max;
                         }
+                        // set the day's weather description
                         // note: add priority list for escalating conditions, e.g. snow trumps rain, rain trumps clouds, etc
                         if(day.short_description === undefined) {
                             day["short_description"] = days[date][hour].weather[0].main;
@@ -88,8 +92,9 @@ class Weather extends Component {
             });
     }
 
-    render() { 
+    render() {
 
+        // convenience object containing parsed sections of the date string
         const today = {
             "date" : new Date(this.state.weatherData.currentTime + " UTC").toString(),
             "day" : new Date(this.state.weatherData.currentTime + " UTC").getDay(),
@@ -97,6 +102,7 @@ class Weather extends Component {
             "date" : new Date(this.state.weatherData.currentTime + " UTC").getDate()
         }
 
+        // array of ForecastDay components for each upcoming day
         const forecast = this.state.forecast.map( (day) => {
             return (
                 <ForecastDay
@@ -139,7 +145,7 @@ class Weather extends Component {
                     <div className="Date">
                         {dateHelper.fullDayName(today.day)}, {dateHelper.fullMonthName(today.month)} {today.date}{dateHelper.dateOrdinal(today.date)}
                     </div>
-                    
+
                     <div className="Date">
                         {forecast}
                     </div>
@@ -154,5 +160,5 @@ class Weather extends Component {
         }
     }
 }
- 
+
 export default Weather;
