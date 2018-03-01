@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import moment from 'moment';
 import './Weather.css';
 import ForecastDay from './ForecastDay/ForecastDay';
 import dateHelper from '../DateHelper';
@@ -38,7 +38,7 @@ class Weather extends Component {
 
                 // list of all available weather data returned from the API (3 hour intervals)
                 for (let elem of response.list) {
-                    let now = new Date(elem.dt_txt + " UTC");
+                    let now = new Date( moment.utc(elem.dt_txt).local().format("YYYY-MM-DD HH:mm:ss") );
 
                     if (days[now.getDate()] == undefined) {
                         days[now.getDate()] = {};
@@ -58,7 +58,7 @@ class Weather extends Component {
 
                         // set the date object within the current day
                         if (day.date === undefined) {
-                            let dateObj = new Date(days[date][hour].dt_txt + " UTC");
+                            let dateObj = new Date( moment.utc(days[date][hour].dt_txt).local().format("YYYY-MM-DD HH:mm:ss") );
                             day["date"] = {
                                 day: dateObj.getDay(),
                                 date: dateObj.getDate(),
@@ -94,12 +94,14 @@ class Weather extends Component {
 
     render() {
 
+        const todayDate = new Date( moment.utc(this.state.weatherData.currentTime).local().format("YYYY-MM-DD HH:mm:ss") );
+
         // convenience object containing parsed sections of the date string
         const today = {
-            "date" : new Date(this.state.weatherData.currentTime + " UTC").toString(),
-            "day" : new Date(this.state.weatherData.currentTime + " UTC").getDay(),
-            "month" : new Date(this.state.weatherData.currentTime + " UTC").getMonth(),
-            "date" : new Date(this.state.weatherData.currentTime + " UTC").getDate()
+            "date" : todayDate.toString(),
+            "day" : todayDate.getDay(),
+            "month" : todayDate.getMonth(),
+            "date" : todayDate.getDate()
         }
 
         // array of ForecastDay components for each upcoming day
