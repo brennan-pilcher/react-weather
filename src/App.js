@@ -20,6 +20,13 @@ class App extends Component {
     this.setState({showWeather : true});
   }
 
+  componentDidMount() {
+    fetch('https://react-weather-backend.herokuapp.com/weather/wake')
+      .then(response => {
+        console.log(response);
+      })
+  }
+
 
   render() {
 
