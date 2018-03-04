@@ -107,10 +107,11 @@ class Weather extends Component {
         // array of ForecastDay components for each upcoming day
         const forecast = this.state.forecast.map( (day) => {
             return (
-                <li className="collection-item">
+                <li key={day.date.date} className="collection-item">
                     <ForecastDay
-                        key={day.date.date}
-                        day={dateHelper.shortDayName(day.date.day)}
+                        day={dateHelper.fullDayName(day.date.day)}
+                        month={day.date.month + 1}
+                        date={day.date.date}
                         min={day.temp_min.toFixed()}
                         max={day.temp_max.toFixed()}
                         desc={day.short_description}
