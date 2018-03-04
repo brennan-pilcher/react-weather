@@ -107,49 +107,49 @@ class Weather extends Component {
         // array of ForecastDay components for each upcoming day
         const forecast = this.state.forecast.map( (day) => {
             return (
-                <ForecastDay
-                    key={day.date.date}
-                    day={dateHelper.shortDayName(day.date.day)}
-                    min={day.temp_min.toFixed()}
-                    max={day.temp_max.toFixed()}
-                    desc={day.short_description}
-                />
+                <li className="collection-item">
+                    <ForecastDay
+                        key={day.date.date}
+                        day={dateHelper.shortDayName(day.date.day)}
+                        min={day.temp_min.toFixed()}
+                        max={day.temp_max.toFixed()}
+                        desc={day.short_description}
+                    />
+                </li>
             )
         });
+
+        const formatDescription = (desc) => {
+            return desc.charAt(0).toUpperCase() + desc.slice(1) + ".";
+        }
 
         if (this.state.ready) {
             return (
                 <div>
-                    <div className="Container">
-                    <div className="Block">
-                        <div className="Temp">
-                            {this.state.weatherData.currentMain.temp.toFixed()}°F
-                        </div>
-                        <div className="ShortDescription">
-                            {this.state.weatherData.currentWeather[0].main}
-                        </div>
-                    </div>
-                    <div className="Block">
-                        <div className="City">
-                            {this.state.weatherData.city.name}
-                        </div>
-                        <div className="Country">
-                            {this.state.weatherData.city.country}
-                        </div>
-                    </div>
-                    </div>
-                    <div className="LongDescription">
-                        {this.state.weatherData.currentWeather[0].description}
-                    </div>
-                    <div>
-                        High: {this.state.weatherData.currentMain.temp_max.toFixed()}   Low: {this.state.weatherData.currentMain.temp_min.toFixed()}
-                    </div>
-                    <div className="Date">
-                        {dateHelper.fullDayName(today.day)}, {dateHelper.fullMonthName(today.month)} {today.date}{dateHelper.dateOrdinal(today.date)}
-                    </div>
+                    <div className="container">
+                    <div className="row">
+                        <div className="col s12 m12">
+                        <div className="card cyan darken-3">
+                            <div className="card-content white-text">
+                            <span className="card-title">{this.state.weatherData.city.name}</span>
+                            <div className="descWrapper">
+                                <h1>{this.state.weatherData.currentMain.temp.toFixed()}°F</h1>
+                            </div>
 
-                    <div className="Date">
-                        {forecast}
+                            <h5>{formatDescription(this.state.weatherData.currentWeather[0].description)}</h5>
+                            <p>{dateHelper.fullDayName(today.day)}, {dateHelper.fullMonthName(today.month)} {today.date}{dateHelper.dateOrdinal(today.date)}</p>
+                            </div>
+                            <div className="card-action">
+                                {this.state.weatherData.currentMain.temp_max.toFixed()}°F / {this.state.weatherData.currentMain.temp_min.toFixed()}°F
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="col s12 m6 offset-m3">
+                        <ul className="collection">
+                            {forecast}
+                        </ul>
+                    </div>
                     </div>
                 </div>
             );

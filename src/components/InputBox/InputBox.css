@@ -1,33 +1,9 @@
 
-input {
-    margin: auto;
-    width: 36%;
-    margin-top: 16px;
-    font-size: 52px;
-    height: 1em;
-    font-family: "Catamaran";
-    background-color: transparent;
-    outline: 0;
-    border: none;
-    color: #56CBF9;
-    border-bottom: 2px solid #56CBF9;
+::placeholder {
+    color: #000;
+    opacity: .6;
 }
 
 button {
-    margin: auto;
-    margin-top: 16px;
-    width: 36%;
-    font-size: 52px;
-    font-family: "Catamaran";
-    background-color: transparent;
-    outline: 0;
-    border: 2px solid #56CBF9;
-    color: #56CBF9;
-    display: block;
-}
-
-@media (max-width: 650px) {
-    input, button {
-        width: 75%;
-    }
+    width: 100%;
 }
