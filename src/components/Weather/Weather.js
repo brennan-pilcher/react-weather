@@ -146,7 +146,8 @@ class Weather extends Component {
                         </div>
                     </div>
                     <div className="col s12 m6 offset-m3">
-                        <ul className="collection">
+                        <ul className="collection with-header">
+                            <li className="collection-header"><h5>Forecast</h5></li>
                             {forecast}
                         </ul>
                     </div>
