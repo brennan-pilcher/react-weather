@@ -40,7 +40,7 @@ class Weather extends Component {
                 for (let elem of response.list) {
                     let now = new Date( moment.utc(elem.dt_txt).local().format("YYYY-MM-DD HH:mm:ss") );
 
-                    if (days[now.getDate()] == undefined) {
+                    if (days[now.getDate()] === undefined) {
                         days[now.getDate()] = {};
                     }
 
@@ -98,7 +98,7 @@ class Weather extends Component {
 
         // convenience object containing parsed sections of the date string
         const today = {
-            "date" : todayDate.toString(),
+            "dateString" : todayDate.toString(),
             "day" : todayDate.getDay(),
             "month" : todayDate.getMonth(),
             "date" : todayDate.getDate()
@@ -141,7 +141,7 @@ class Weather extends Component {
                             <p>{dateHelper.fullDayName(today.day)}, {dateHelper.fullMonthName(today.month)} {today.date}{dateHelper.dateOrdinal(today.date)}</p>
                             </div>
                             <div className="card-action">
-                                {this.state.weatherData.currentMain.temp_max.toFixed()}°F / {this.state.weatherData.currentMain.temp_min.toFixed()}°F
+                                <b>{this.state.weatherData.currentMain.temp_max.toFixed()}°F / {this.state.weatherData.currentMain.temp_min.toFixed()}°F</b>
                             </div>
                         </div>
                         </div>
@@ -158,7 +158,11 @@ class Weather extends Component {
         } else {
             return (
                 <div>
-                    <p> Loading... </p>
+                    <div className="container">
+                        <div className="progress cyan lighten-1">
+                            <div className="indeterminate cyan darken-3"></div>
+                        </div>
+                    </div>
                 </div>
             );
         }

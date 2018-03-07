@@ -6,8 +6,8 @@ const InputBox = (props) => {
         <div>
             <div className="row">
                 <div className="input-field col s6 m4 offset-m4 offset-s3">
-                    <input placeholder="ZIP Code" onChange={props.changed}></input>
-                    <button className="waves-effect waves-light btn-large" onClick={props.click}>View Weather</button>
+                    <input placeholder="ZIP Code (US)" onChange={props.changed}></input>
+                    <button disabled={props.buttonDisabled} className="waves-effect waves-light btn-large" onClick={props.click}>View Weather</button>
                 </div>
             </div>
             

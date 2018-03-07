@@ -7,12 +7,19 @@ import InputBox from './components/InputBox/InputBox';
 class App extends Component {
   state = {
     showWeather : false,
-    location : ""
+    location : { type: "zip", location: "", valid : false }
   }
 
 
   getInputValue = (event) => {
-    this.setState({location : event.target.value});
+    // valid zip code entered
+    if ( event.target.value.length == 5 && !isNaN(parseInt(event.target.value)) ) {
+      this.setState({location: { type: "zip", location: event.target.value, valid : true }});
+    }
+    else {
+      if ( this.state.location.valid ) { this.setState({location : { type: this.state.location.type, location: this.state.location.location, valid : false } }); }
+    }
+    
   }
 
   showWeather = () => {
@@ -30,7 +37,7 @@ class App extends Component {
 
   render() {
 
-    let currentWeather = <Weather location={this.state.location} />;
+    let currentWeather = <Weather location={this.state.location.location} />;
 
     if (this.state.showWeather) {
       return (
@@ -41,7 +48,7 @@ class App extends Component {
     } else {
       return (
         <div className="App">
-          <InputBox click={this.showWeather} changed={this.getInputValue} />
+          <InputBox buttonDisabled={this.state.location.valid ? '' : 'disabled'} click={this.showWeather} changed={this.getInputValue} />
         </div>
       );
   }
