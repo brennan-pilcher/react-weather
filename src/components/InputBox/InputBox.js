@@ -10,8 +10,6 @@ const InputBox = (props) => {
                     <button disabled={props.buttonDisabled} className="waves-effect waves-light btn-large" onClick={props.click}>View Weather</button>
                 </div>
             </div>
-            
-            
         </div>
     )
 };

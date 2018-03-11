@@ -74,7 +74,7 @@ class Weather extends Component {
                             day["temp_max"] = days[date][hour].main.temp_max;
                         }
                         // set the day's weather description
-                        // note: add priority list for escalating conditions, e.g. snow trumps rain, rain trumps clouds, etc
+                        // TODO add priority list for escalating conditions, e.g. snow trumps rain, rain trumps clouds, etc
                         if(day.short_description === undefined) {
                             day["short_description"] = days[date][hour].weather[0].main;
                         }
@@ -129,25 +129,25 @@ class Weather extends Component {
                 <div>
                     <div className="container">
                         <div className="row">
-                            <div className="col s12 m8 l6 xl4 offset-m2 offset-l3 offset-xl4">
-                            <div className="card cyan darken-3">
-                                <div className="card-content white-text">
-                                    <span className="card-title">{this.state.weatherData.city.name}</span>
-                                    <div className="descWrapper">
-                                        <h1>{this.state.weatherData.currentMain.temp.toFixed()}°F</h1>
-                                    </div>
+                            <div className="col s12 m8 l6 xl6 offset-m2 offset-l3 offset-xl3">
+                                <div className="card cyan darken-3">
+                                    <div className="card-content white-text">
+                                        <span className="card-title">{this.state.weatherData.city.name}</span>
+                                        <div className="descWrapper">
+                                            <h1>{this.state.weatherData.currentMain.temp.toFixed()}°F</h1>
+                                        </div>
 
-                                    <h5>{formatDescription(this.state.weatherData.currentWeather[0].description)}</h5>
-                                    <p>{dateHelper.fullDayName(today.day)}, {dateHelper.fullMonthName(today.month)} {today.date}{dateHelper.dateOrdinal(today.date)}</p>
+                                        <h5>{formatDescription(this.state.weatherData.currentWeather[0].description)}</h5>
+                                        <p>{dateHelper.fullDayName(today.day)}, {dateHelper.fullMonthName(today.month)} {today.date}{dateHelper.dateOrdinal(today.date)}</p>
+                                    </div>
+                                    <div className="card-action">
+                                        <b>{this.state.weatherData.currentMain.temp_max.toFixed()}°F / {this.state.weatherData.currentMain.temp_min.toFixed()}°F</b>
+                                    </div>
                                 </div>
-                                <div className="card-action">
-                                    <b>{this.state.weatherData.currentMain.temp_max.toFixed()}°F / {this.state.weatherData.currentMain.temp_min.toFixed()}°F</b>
-                                </div>
-                            </div>
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col s12 m8 l6 xl4 offset-m2 offset-l3 offset-xl4">
+                            <div className="col s12 m8 l6 xl6 offset-m2 offset-l3 offset-xl3">
                                 <ul className="collection with-header">
                                     <li className="collection-header"><h5>Forecast</h5></li>
                                     {forecast}

@@ -1,11 +1,11 @@
 import React from 'react';
 
-const forecastDay = (props) => {
+const ForecastDay = (props) => {
     return (
-        <div>
+        <div className="forecast-day">
             <b>{props.day} - {props.month}/{props.date}</b> - {props.desc} - {props.max}°F / {props.min}°F
         </div>
     );
 };
 
-export default forecastDay;
+export default ForecastDay;
