@@ -38,7 +38,7 @@ class Weather extends Component {
 
                 // list of all available weather data returned from the API (3 hour intervals)
                 for (let elem of response.list) {
-                    let now = new Date( moment.utc(elem.dt_txt).local().format("YYYY-MM-DD HH:mm:ss") );
+                    let now = new Date( moment.utc(elem.dt_txt).local().format("YYYY/MM/DD HH:mm:ss") );
 
                     if (days[now.getDate()] === undefined) {
                         days[now.getDate()] = {};
@@ -58,7 +58,7 @@ class Weather extends Component {
 
                         // set the date object within the current day
                         if (day.date === undefined) {
-                            let dateObj = new Date( moment.utc(days[date][hour].dt_txt).local().format("YYYY-MM-DD HH:mm:ss") );
+                            let dateObj = new Date( moment.utc(days[date][hour].dt_txt).local().format("YYYY/MM/DD HH:mm:ss") );
                             day["date"] = {
                                 day: dateObj.getDay(),
                                 date: dateObj.getDate(),
@@ -94,7 +94,7 @@ class Weather extends Component {
 
     render() {
 
-        const todayDate = new Date( moment.utc(this.state.weatherData.currentTime).local().format("YYYY-MM-DD HH:mm:ss") );
+        const todayDate = new Date( moment.utc(this.state.weatherData.currentTime).local().format("YYYY/MM/DD HH:mm:ss") );
 
         // convenience object containing parsed sections of the date string
         const today = {
