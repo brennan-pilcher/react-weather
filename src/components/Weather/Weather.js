@@ -15,7 +15,10 @@ class Weather extends Component {
             currentTime : ""
         },
         forecast: [],
-        ready : false
+        ready : false,
+        prefs: {
+            scale : "F"
+        }
     }
 
 
@@ -103,6 +106,22 @@ class Weather extends Component {
             "month" : todayDate.getMonth(),
             "date" : todayDate.getDate()
         }
+        
+        const formatDescription = (desc) => {
+            return desc.charAt(0).toUpperCase() + desc.slice(1) + ".";
+        }
+
+        const formatTemp = (temp) => {
+            if (this.state.prefs.scale == "F") {
+                return (temp * 1.8 - 459.67).toFixed() + " °F";
+            }
+            else if (this.state.prefs.scale == "C") {
+                return (temp - 273.15).toFixed() + " °C";
+            }
+            else {
+                return temp.toFixed() + " °K";
+            }
+        }
 
         // array of ForecastDay components for each upcoming day
         const forecast = this.state.forecast.map( (day) => {
@@ -112,17 +131,15 @@ class Weather extends Component {
                         day={dateHelper.fullDayName(day.date.day)}
                         month={day.date.month + 1}
                         date={day.date.date}
-                        min={day.temp_min.toFixed()}
-                        max={day.temp_max.toFixed()}
+                        min={formatTemp(day.temp_min)}
+                        max={formatTemp(day.temp_max)}
                         desc={day.short_description}
                     />
                 </li>
             )
         });
 
-        const formatDescription = (desc) => {
-            return desc.charAt(0).toUpperCase() + desc.slice(1) + ".";
-        }
+        
 
         if (this.state.ready) {
             return (
@@ -134,14 +151,14 @@ class Weather extends Component {
                                     <div className="card-content white-text">
                                         <span className="card-title">{this.state.weatherData.city.name}</span>
                                         <div className="descWrapper">
-                                            <h1>{this.state.weatherData.currentMain.temp.toFixed()}°F</h1>
+                                            <h1>{formatTemp(this.state.weatherData.currentMain.temp)}</h1>
                                         </div>
 
                                         <h5>{formatDescription(this.state.weatherData.currentWeather[0].description)}</h5>
                                         <p>{dateHelper.fullDayName(today.day)}, {dateHelper.fullMonthName(today.month)} {today.date}{dateHelper.dateOrdinal(today.date)}</p>
                                     </div>
                                     <div className="card-action">
-                                        <b>{this.state.weatherData.currentMain.temp_max.toFixed()}°F / {this.state.weatherData.currentMain.temp_min.toFixed()}°F</b>
+                                        <b>{formatTemp(this.state.weatherData.currentMain.temp_max)} / {formatTemp(this.state.weatherData.currentMain.temp_min)}</b>
                                     </div>
                                 </div>
                             </div>
