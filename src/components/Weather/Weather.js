@@ -24,75 +24,90 @@ class Weather extends Component {
 
     componentDidMount() {
         // Query the Node/Express backend for the requested data
-        fetch('https://react-weather-backend.herokuapp.com/weather/zip/' + this.props.location)
-            .then(res => res.json())
-            .then(response => {
-                //console.log(response);
 
-                let wD = this.state.weatherData;
-
-                // current weather data
-                wD.city = response.city;
-                wD.currentTime = response.list[0].dt_txt;
-                wD.currentMain = response.list[0].main;
-                wD.currentWeather = response.list[0].weather;
-
-                let days = {};
-
-                // list of all available weather data returned from the API (3 hour intervals)
-                for (let elem of response.list) {
-                    let now = new Date( moment.utc(elem.dt_txt).local().format("YYYY/MM/DD HH:mm:ss") );
-
-                    if (days[now.getDate()] === undefined) {
-                        days[now.getDate()] = {};
-                    }
-
-                    days[now.getDate()][now.getHours()] = elem;
-                }
-
-                let fc = [];
-
-
-                // loop through all available days and construct a day object for each one with info relevant to the day's forecast
-                for(let date in days) {
-                    let day = {};
-
-                    for(let hour in days[date]) {
-
-                        // set the date object within the current day
-                        if (day.date === undefined) {
-                            let dateObj = new Date( moment.utc(days[date][hour].dt_txt).local().format("YYYY/MM/DD HH:mm:ss") );
-                            day["date"] = {
-                                day: dateObj.getDay(),
-                                date: dateObj.getDate(),
-                                month: dateObj.getMonth()
-                            };
-                        }
-                        // set the day's minimum temperature
-                        if (day.temp_min === undefined || day.temp_min > days[date][hour].main.temp_min) {
-                            day["temp_min"] = days[date][hour].main.temp_min;
-                        }
-                        //set the day's maximum temperature
-                        if (day.temp_max === undefined || day.temp_max < days[date][hour].main.temp_max) {
-                            day["temp_max"] = days[date][hour].main.temp_max;
-                        }
-                        // set the day's weather description
-                        // TODO add priority list for escalating conditions, e.g. snow trumps rain, rain trumps clouds, etc
-                        if(day.short_description === undefined) {
-                            day["short_description"] = days[date][hour].weather[0].main;
-                        }
-                    }
-
-                    fc.push(day);
-
-                }
-
-                this.setState({
-                    weatherData: wD,
-                    forecast: fc,
-                    ready: true
+        if (this.props.location.type == "zip") {
+            fetch('https://react-weather-backend.herokuapp.com/weather/zip/' + this.props.location.location)
+                .then(res => res.json())
+                .then(response => {
+                    console.log(response);
+                    this.parseWeatherDataResponse(response);
                 });
-            });
+        }
+        
+        if (this.props.location.type == "latlong") {
+            fetch('https://react-weather-backend.herokuapp.com/weather/latlong/' + this.props.location.location)
+                .then(res => res.json())
+                .then(response => {
+                    console.log(response);
+                    this.parseWeatherDataResponse(response);
+                });
+        }
+    }
+
+    parseWeatherDataResponse = (response) => {
+        let wD = this.state.weatherData;
+
+        // current weather data
+        wD.city = response.city;
+        wD.currentTime = response.list[0].dt_txt;
+        wD.currentMain = response.list[0].main;
+        wD.currentWeather = response.list[0].weather;
+
+        let days = {};
+
+        // list of all available weather data returned from the API (3 hour intervals)
+        for (let elem of response.list) {
+            let now = new Date( moment.utc(elem.dt_txt).local().format("YYYY/MM/DD HH:mm:ss") );
+
+            if (days[now.getDate()] === undefined) {
+                days[now.getDate()] = {};
+            }
+
+            days[now.getDate()][now.getHours()] = elem;
+        }
+
+        let fc = [];
+
+
+        // loop through all available days and construct a day object for each one with info relevant to the day's forecast
+        for (let date in days) {
+            let day = {};
+
+            for(let hour in days[date]) {
+
+                // set the date object within the current day
+                if (day.date === undefined) {
+                    let dateObj = new Date( moment.utc(days[date][hour].dt_txt).local().format("YYYY/MM/DD HH:mm:ss") );
+                    day["date"] = {
+                        day: dateObj.getDay(),
+                        date: dateObj.getDate(),
+                        month: dateObj.getMonth()
+                    };
+                }
+                // set the day's minimum temperature
+                if (day.temp_min === undefined || day.temp_min > days[date][hour].main.temp_min) {
+                    day["temp_min"] = days[date][hour].main.temp_min;
+                }
+                //set the day's maximum temperature
+                if (day.temp_max === undefined || day.temp_max < days[date][hour].main.temp_max) {
+                    day["temp_max"] = days[date][hour].main.temp_max;
+                }
+                // set the day's weather description
+                // TODO add priority list for escalating conditions, e.g. snow trumps rain, rain trumps clouds, etc
+                if(day.short_description === undefined) {
+                    day["short_description"] = days[date][hour].weather[0].main;
+                }
+            }
+
+            fc.push(day);
+
+        }
+
+        this.setState({
+            weatherData: wD,
+            forecast: fc,
+            ready: true
+        });
     }
 
     render() {
