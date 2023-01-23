@@ -1,141 +1,132 @@
-import React, { Component } from 'react';
+import { useEffect, useState } from "react";
 import './App.css';
 import Weather from './components/Weather/Weather';
 import InputBox from './components/InputBox/InputBox';
 
+const App = () => {
+  const [showWeather, setShowWeather] = useState(false);
+  const [location, setLocation] = useState({
+    type: "",
+    location: "",
+    valid: false
+  });
+  const [geolocation, setGeolocation] = useState({
+    capable: false,
+    allowed: false,
+    buttonText: "ALLOW GEOLOCATION?"
+  });
 
-class App extends Component {
-  state = {
-    showWeather : false,
-    location : {
-      type: "",
-      location: "",
-      valid : false
-    },
-    geolocation : {
-      capable : false,
-      allowed : false,
-      buttonText : "ALLOW GEOLOCATION?"
-    }
-  }
-
-
-  getInputValue = (event) => {
+  const getInputValue = (event) => {
+    const input = event.target.value;
     // valid zip code entered
-    if ( event.target.value.length == 5 && !isNaN(parseInt(event.target.value)) ) {
-      this.setState({location: { type: "zip", location: event.target.value, valid : true }});
+    if (input.length == 5 && !isNaN(parseInt(input)) ) {
+      setLocation({
+        type: "zip",
+        location: input,
+        valid: true
+      });
     }
     else {
-      if ( this.state.location.valid ) { this.setState({location : { type: this.state.location.type, location: this.state.location.location, valid : false } }); }
+      if ( location.valid ) {
+        setLocation({
+          ...location,
+          valid: false
+        });
+      }
     }
-  }
+  };
 
-  geolocate = () => {
-    if (this.state.geolocation.capable) {
+  const geolocate = () => {
+    if (geolocation.capable) {
       // attempting to geolocate
-      this.setState({
-        geolocation : {
-          capable : true,
-          allowed : this.state.geolocation.allowed,
-          buttonText : "GEOLOCATING..."
-        }
+      setGeolocation({
+        capable: true,
+        allowed: geolocation.allowed,
+        buttonText: "GEOLOCATING..."
       });
 
-      navigator.geolocation.getCurrentPosition( (pos) => {
-        console.log(pos);
-        // success
-        this.setState({
-          geolocation : {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          console.log(pos);
+          // success
+
+          setGeolocation({
             capable : true,
             allowed : true,
             buttonText : "GEOLOCATED!"
-          },
-          location : {
+          });
+
+          setLocation({
             type: "latlong",
             location: "lat=" + pos.coords.latitude.toFixed(2).toString() + "&lon=" + pos.coords.longitude.toFixed(2).toString(),
-            valid : true
-          },
-          showWeather : true
-        });
+            valid: true
+          });
 
-      }, (err) => {
-        console.log(err);
-        if (err.code == err.PERMISSION_DENIED) {
-          // permission denied
-          this.setState({
-            geolocation : {
-              capable : true,
-              allowed : false,
-              buttonText : "GEOLOCATION BLOCKED"
-            }
-          });
-        }
-        if (err.code == err.TIMEOUT) {
-          // timeout
-          this.setState({
-            geolocation : {
-              capable : true,
-              allowed : false,
-              buttonText : "TIMEOUT GETTING LOCATION"
-            }
-          });
-        }
-        else {
-          // misc errors
-          this.setState({
-            geolocation : {
-              capable : true,
-              allowed : false,
-              buttonText : "GEOLOCATION ERROR"
-            }
-          });
-        }
-      }, {enableHighAccuracy: false, timeout:10000, maximumAge: 0});
+          setShowWeather(true);
+
+        }, (err) => {
+          console.log(err);
+
+          if (err.code == err.PERMISSION_DENIED) {
+            // permission denied
+
+            setGeolocation({
+              capable: true,
+              allowed: false,
+              buttonText: "GEOLOCATION BLOCKED"
+            });
+          }
+          if (err.code == err.TIMEOUT) {
+            // timeout
+            
+            setGeolocation({
+              capable: true,
+              allowed: false,
+              buttonText: "TIMEOUT GETTING LOCATION"
+            });
+          }
+          else {
+            // misc errors
+            setGeolocation({
+              capable: true,
+              allowed: false,
+              buttonText: "GEOLOCATION ERROR"
+            });
+          }
+        },
+        {enableHighAccuracy: false, timeout:10000, maximumAge: 0});
     }
   }
 
-  showWeather = () => {
-    //alert(this.state.location);
-    this.setState({showWeather : true});
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     if ("geolocation" in navigator) {
-      this.setState({
-        geolocation: {
-          capable : true,
-          allowed : this.state.geolocation.allowed,
-          buttonText : this.state.geolocation.buttonText
-        }
+      setGeolocation({
+        ...geolocation,
+        capable: true
       });
     } else {
-        this.setState({
-          geolocation: {
-            capable: false,
-            allowed : this.state.geolocation.allowed,
-            buttonText : "GEOLOCATION DISABLED"
-          }
-        });
+      setGeolocation({
+        ...geolocation,
+        capable: false,
+        buttonText: "GEOLOCATION DISABLED"
+      });
     }
-  }
+  }, [])
 
-  render() {
-    let currentWeather = <Weather location={this.state.location} />;
+  const currentWeather = <Weather location={location} />;
+  const inputBox = <InputBox
+    geoButtonDisabled={geolocation.capable ? '' : 'disabled'}
+    geolocation={geolocation}
+    zipButtonDisabled={location.valid ? '' : 'disabled'}
+    geoClick={geolocate} click={() => setShowWeather(true)}
+    changed={getInputValue}
+  />
 
-    if (this.state.showWeather) {
-      return (
-        <div className="App">
-          {currentWeather}
-        </div>
-      );
-    } else {
-      return (
-        <div className="App">
-          <InputBox  geoButtonDisabled={this.state.geolocation.capable ? '' : 'disabled'} geolocation={this.state.geolocation} zipButtonDisabled={this.state.location.valid ? '' : 'disabled'} geoClick={this.geolocate} click={this.showWeather} changed={this.getInputValue} />
-        </div>
-      );
-  }
-  }
-}
+  return (
+    <div className="App">
+      {showWeather ? currentWeather : inputBox}
+    </div>
+  )
+};
 
 export default App;
