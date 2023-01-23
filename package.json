@@ -4,16 +4,11 @@
   "private": true,
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "jest": "^29.3.1",
-    "jest-cli": "^29.3.1",
     "moment": "^2.20.1",
-    "npm": "^9.3.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
-    "react-test-renderer": "^16.2.0"
+    "react-test-renderer": "^18.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -22,7 +17,7 @@
     "eject": "react-scripts eject",
     "deploy": "npm run build&&gh-pages -d build"
   },
-  "homepage": "https://brennan-pilcher.github.io/react-weather",
+  "homepage": "https://pilcher.dev/react-weather",
   "devDependencies": {
     "gh-pages": "^5.0.0"
   },
