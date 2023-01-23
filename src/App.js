@@ -28,7 +28,6 @@ class App extends Component {
     else {
       if ( this.state.location.valid ) { this.setState({location : { type: this.state.location.type, location: this.state.location.location, valid : false } }); }
     }
-    
   }
 
   geolocate = () => {
@@ -101,12 +100,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('https://react-weather-backend.herokuapp.com/weather/wake')
-      .then(response => {
-        console.log(response);
-      });
-    
-    
     if ("geolocation" in navigator) {
       this.setState({
         geolocation: {
@@ -126,11 +119,7 @@ class App extends Component {
     }
   }
 
-
-
-
   render() {
-
     let currentWeather = <Weather location={this.state.location} />;
 
     if (this.state.showWeather) {

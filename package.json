@@ -6,13 +6,13 @@
     "babel-polyfill": "^6.26.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "jest": "^22.4.2",
-    "jest-cli": "^22.4.2",
+    "jest": "^29.3.1",
+    "jest-cli": "^29.3.1",
     "moment": "^2.20.1",
-    "npm": "^5.7.1",
+    "npm": "^9.3.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.1.0",
+    "react-scripts": "^5.0.1",
     "react-test-renderer": "^16.2.0"
   },
   "scripts": {
@@ -24,6 +24,18 @@
   },
   "homepage": "https://brennan-pilcher.github.io/react-weather",
   "devDependencies": {
-    "gh-pages": "^1.1.0"
+    "gh-pages": "^5.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

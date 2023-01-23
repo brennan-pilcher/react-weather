@@ -26,7 +26,14 @@ class Weather extends Component {
         // Query the Node/Express backend for the requested data
 
         if (this.props.location.type == "zip") {
-            fetch('https://react-weather-backend.herokuapp.com/weather/zip/' + this.props.location.location)
+            fetch('https://react-weather-backend.azurewebsites.net/api/ReactWeatherBackendHttpTrigger',
+                {
+                    method: 'GET',
+                    body: {
+                        type: 'zip',
+                        zip: this.props.location.location
+                    }
+                })
                 .then(res => res.json())
                 .then(response => {
                     console.log(response);
@@ -35,7 +42,14 @@ class Weather extends Component {
         }
         
         if (this.props.location.type == "latlong") {
-            fetch('https://react-weather-backend.herokuapp.com/weather/latlong/' + this.props.location.location)
+            fetch('https://react-weather-backend.azurewebsites.net/api/ReactWeatherBackendHttpTrigger',
+                {
+                    method: 'GET',
+                    body: {
+                        type: 'latlong',
+                        latlong: this.props.location.location
+                    }
+                })
                 .then(res => res.json())
                 .then(response => {
                     console.log(response);
