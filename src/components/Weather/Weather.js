@@ -28,32 +28,32 @@ class Weather extends Component {
         if (this.props.location.type == "zip") {
             fetch('https://react-weather-backend.azurewebsites.net/api/ReactWeatherBackendHttpTrigger',
                 {
-                    method: 'GET',
-                    body: {
+                    method: 'POST',
+                    body: JSON.stringify({
                         type: 'zip',
                         zip: this.props.location.location
-                    }
+                    })
                 })
                 .then(res => res.json())
                 .then(response => {
                     console.log(response);
-                    this.parseWeatherDataResponse(response);
+                    this.parseWeatherDataResponse(response.data);
                 });
         }
         
         if (this.props.location.type == "latlong") {
             fetch('https://react-weather-backend.azurewebsites.net/api/ReactWeatherBackendHttpTrigger',
                 {
-                    method: 'GET',
-                    body: {
+                    method: 'POST',
+                    body: JSON.stringify({
                         type: 'latlong',
                         latlong: this.props.location.location
-                    }
+                    })
                 })
                 .then(res => res.json())
                 .then(response => {
                     console.log(response);
-                    this.parseWeatherDataResponse(response);
+                    this.parseWeatherDataResponse(response.data);
                 });
         }
     }
