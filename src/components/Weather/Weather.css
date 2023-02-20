@@ -1,14 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Catamaran');
 
 body {
-  font-family: "Catamaran";
-  font-weight: bold;
-  color: #56CBF9;
+    font-family: "Catamaran";
+    font-weight: bold;
+    color: #56CBF9;
 }
 
 p {
-  font-weight: normal;
+    font-weight: normal;
 }
-
-
-
