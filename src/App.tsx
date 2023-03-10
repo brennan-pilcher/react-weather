@@ -2,23 +2,25 @@ import { useEffect, useState } from "react";
 import './App.css';
 import InputBox from './components/InputBox/InputBox';
 import Weather from "./components/Weather/Weather";
+import { Geolocation, Location } from "./types";
 
 const App = () => {
-    const [showWeather, setShowWeather] = useState(false);
-    const [location, setLocation] = useState({
+    const [showWeather, setShowWeather] = useState<boolean>(false);
+    const [location, setLocation] = useState<Location>({
         type: "",
         location: "",
         valid: false
     });
-    const [geolocation, setGeolocation] = useState({
+    const [geolocation, setGeolocation] = useState<Geolocation>({
         capable: false,
         allowed: false,
         buttonText: "ALLOW GEOLOCATION?"
     });
     
-    const getInputValue = (event) => {
-        const input = event.target.value;
-        const isValidZipCode = input.length == 5 && !isNaN(parseInt(input));
+    const getInputValue: React.ChangeEventHandler<HTMLInputElement> = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const input: string = event.target.value;
+        
+        const isValidZipCode = input.length === 5 && !isNaN(parseInt(input));
 
         if (isValidZipCode) {
             setLocation({
@@ -46,7 +48,7 @@ const App = () => {
                 buttonText: "GEOLOCATING..."
             });
 
-            const geolocationSuccessCallback = (pos) => {
+            const geolocationSuccessCallback = (pos: GeolocationPosition) => {
                 setGeolocation({
                     capable : true,
                     allowed : true,
@@ -62,15 +64,15 @@ const App = () => {
                 setShowWeather(true);
             }
 
-            const geolocationErrorCallback = (err) => {
-                if (err.code == err.PERMISSION_DENIED) {
+            const geolocationErrorCallback = (err: GeolocationPositionError) => {
+                if (err.code === err.PERMISSION_DENIED) {
                     setGeolocation({
                         capable: true,
                         allowed: false,
                         buttonText: "GEOLOCATION BLOCKED"
                     });
                 }
-                if (err.code == err.TIMEOUT) {
+                if (err.code === err.TIMEOUT) {
                     setGeolocation({
                         capable: true,
                         allowed: false,
@@ -89,7 +91,7 @@ const App = () => {
             navigator.geolocation.getCurrentPosition(
                 geolocationSuccessCallback,
                 geolocationErrorCallback,
-                {enableHighAccuracy: false, timeout:10000, maximumAge: 0}
+                {enableHighAccuracy: false, timeout: 10000, maximumAge: 0}
             );
         }
     }
@@ -112,11 +114,12 @@ const App = () => {
     const currentWeather = <Weather location={location} />;
 
     const inputBox = <InputBox
-        geoButtonDisabled={geolocation.capable ? '' : 'disabled'}
+        geoButtonDisabled={!geolocation.capable}
         geolocation={geolocation}
-        zipButtonDisabled={location.valid ? '' : 'disabled'}
-        geoClick={geolocate} click={() => setShowWeather(true)}
-        changed={getInputValue}
+        zipButtonDisabled={!location.valid}
+        geoClick={geolocate}
+        showWeather={() => setShowWeather(true)}
+        onChange={getInputValue}
     />
         
     return (

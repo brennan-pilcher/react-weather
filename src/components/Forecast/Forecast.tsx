@@ -1,18 +1,21 @@
-import ForecastDay from "../Forecast/ForecastDay/ForecastDay";
-import { FAHRENHEIT } from "../../contants";
+import ForecastDay from "./ForecastDay/ForecastDay";
 import { formatTemp } from "../../utils";
-import dateHelper from '../../dateHelper'
+import { fullDayName } from '../../dateHelpers'
 
-const Forecast = ({ forecast }) => {
-    const forecastDays = forecast.map((day) => {
+interface ForecastProps {
+    forecast: any; //todo fix
+}
+
+const Forecast = ({ forecast }: ForecastProps) => {
+    const forecastDays = forecast.map((day: any) => { // todo fix
         return (
             <li key={day.date.date} className="collection-item">
                 <ForecastDay
-                    day={dateHelper.fullDayName(day.date.day)}
+                    day={fullDayName(day.date.day)}
                     month={day.date.month + 1} // JS Date months begin at 0
                     date={day.date.date}
-                    min={formatTemp(day.temp_min, FAHRENHEIT)}
-                    max={formatTemp(day.temp_max, FAHRENHEIT)}
+                    min={formatTemp(day.temp_min, 'F')}
+                    max={formatTemp(day.temp_max, 'F')}
                     desc={day.short_description}
                 />
             </li>

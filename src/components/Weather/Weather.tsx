@@ -2,8 +2,13 @@ import { useWeatherData } from "../../hooks/useWeatherData";
 import ProgressBar from '../ProgressBar/ProgressBar';
 import Forecast from "../Forecast/Forecast";
 import CurrentWeather from "../CurrentWeather/CurrentWeather";
+import { Location } from "../../types";
 
-const Weather = ({ location }) => {
+interface WeatherProps {
+    location: Location;
+}
+
+const Weather = ({ location }: WeatherProps) => {
     const weather = useWeatherData(location);
     
     if (weather.ready) {

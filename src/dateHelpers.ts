@@ -1,4 +1,4 @@
-const shortDayName = (dayNumber) => {
+const shortDayName = (dayNumber: number) => {
     switch (dayNumber){
         case 0:
             return "Sun";
@@ -19,7 +19,7 @@ const shortDayName = (dayNumber) => {
     }
 }
 
-const fullDayName = (dayNumber) => {
+const fullDayName = (dayNumber: number) => {
     switch (dayNumber){
         case 0:
             return "Sunday";
@@ -41,7 +41,7 @@ const fullDayName = (dayNumber) => {
 }
 
 
-const shortMonthName = (monthNumber) => {
+const shortMonthName = (monthNumber: number) => {
     switch (monthNumber){
         case 0:
             return "Jan";
@@ -72,7 +72,7 @@ const shortMonthName = (monthNumber) => {
     }
 }
 
-const fullMonthName = (monthNumber) => {
+const fullMonthName = (monthNumber: number) => {
     switch (monthNumber){
         case 0:
             return "January";
@@ -103,7 +103,7 @@ const fullMonthName = (monthNumber) => {
     }
 }
 
-const dateOrdinal = (dateNumber) => {
+const dateOrdinal = (dateNumber: number) => {
     const st = new Set([1, 21, 31]);
     const nd = new Set([2, 22]);
     const rd = new Set([3, 23]);
@@ -116,4 +116,4 @@ const dateOrdinal = (dateNumber) => {
     else { return ""; }
 }
  
-export default {shortDayName, fullDayName, shortMonthName, fullMonthName, dateOrdinal};
+export {shortDayName, fullDayName, shortMonthName, fullMonthName, dateOrdinal};
