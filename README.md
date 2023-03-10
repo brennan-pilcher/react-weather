@@ -1,10 +1,10 @@
 # React Weather
 
-A [full stack weather project](https://brennan-pilcher.github.io/react-weather) built with a React, Node.js, and Express.
+A [minimalist weather app](https://brennan-pilcher.github.io/react-weather) built with React, Typescript, and Azure Cloud Functions.
 
-Frontend: React + Jest/Enzyme (for unit testing)
-Backend: Node.js + Express
+Frontend: React
+Backend: Azure Cloud Functions
 
-Weather data comes from OpenWeatherAPI.
+Weather data comes from [OpenWeatherMap](https://openweathermap.org/).
 
 The Trello board tracking development is viewable [here](https://trello.com/b/BDUrvvFz/react-weather).
