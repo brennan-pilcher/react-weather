@@ -1,9 +1,14 @@
 import moment from "moment";
-import dateHelper from "../../dateHelper";
+import { fullDayName, fullMonthName, dateOrdinal } from "../../dateHelpers";
 import { formatTemp, formatDescription } from "../../utils";
-import { FAHRENHEIT, DATE_FORMAT } from "../../contants";
+import { DATE_FORMAT } from "../../contants";
+import { WeatherDataState } from "../../hooks/useWeatherData";
 
-const CurrentWeather = ({ weather }) => {
+interface CurrentWeatherProps {
+    weather: WeatherDataState;
+}
+
+const CurrentWeather = ({ weather }: CurrentWeatherProps) => {
     const currentDate = new Date( moment.utc(weather.weatherData.currentTime).local().format(DATE_FORMAT) );
     const today = {
         dateString: currentDate.toString(),
@@ -16,17 +21,17 @@ const CurrentWeather = ({ weather }) => {
 
     const currentTemp = (
         <div className="descWrapper">
-            <h1>{formatTemp(weather.weatherData.currentMain.temp, FAHRENHEIT)}</h1>
+            <h1>{formatTemp(weather.weatherData.currentMain.temp, 'F')}</h1>
         </div>
     );
 
     const description = <h5>{formatDescription(weather.weatherData.currentWeather[0].description)}</h5>;
 
-    const formattedDate = <p>{`${dateHelper.fullDayName(today.day)}, ${dateHelper.fullMonthName(today.month)} ${today.date}${dateHelper.dateOrdinal(today.date)}`}</p>
+    const formattedDate = <p>{`${fullDayName(today.day)}, ${fullMonthName(today.month)} ${today.date}${dateOrdinal(today.date)}`}</p>
 
     const highAndLowTemps = (
         <div className="card-action">
-            <b>{formatTemp(weather.weatherData.currentMain.temp_max, FAHRENHEIT)} / {formatTemp(weather.weatherData.currentMain.temp_min, FAHRENHEIT)}</b>
+            <b>{formatTemp(weather.weatherData.currentMain.temp_max, 'F')} / {formatTemp(weather.weatherData.currentMain.temp_min, 'F')}</b>
         </div>
     )
 
