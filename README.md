@@ -1,6 +1,6 @@
 # React Weather
 
-A [minimalist weather app](https://brennan-pilcher.github.io/react-weather) built with React, Typescript, and Azure Cloud Functions.
+A [minimalist weather app](https://pilcher.dev/react-weather) built with React, Typescript, and Azure Cloud Functions.
 
 Frontend: React
 Backend: Azure Cloud Functions
